@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="plantilla/template :: head">
+</head>
+<body>
+<header th:replace="plantilla/template :: header"></header>
+
+<div class="container">
+
+    <div class="container theme-showcase" role="main">
+        <hr class="featurette-divider">
+        <img th:src="@{/images/registrarse.png}" width="136" height="136" class="center">
+
+        <form th:action="@{validaregistro}" th:object="${usuario}" method="post" onsubmit="return validaPassword()">
+
+
+            <div class="form-row">
+
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group col-md-4">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="form-control" id="nombre"
+                           placeholder="Ingresa tu nombre">
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" th:field="*{apellido}" class="form-control" id="apellido"
+                           placeholder="Ingresa tu apellido">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" th:field="*{telefono}" class="form-control" id="telefono">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    <label for="email">Email</label>
+                    <input type="email" th:field="*{username}" class="form-control" id="email">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="password">Password</label>
+                    <input type="password" th:field="*{password}" class="form-control" id="password">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="password2">Repite Password</label>
+                    <input type="password" class="form-control" id="password2">
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+
+
+    </div>
+
+
+</div>
+
+<footer th:replace="plantilla/template :: footer"></footer>
+
+<script>
+
+    //valida password que no se repitan.
+    function validaPassword() {
+        var p1 = document.getElementById("password").value;
+        var p2 = document.getElementById("password2").value;
+        if (p1 != p2) {
+            alert("Los password deben de coincidir");
+            return false;
+        }
+    }
+</script>
+
+</body>
+</html>

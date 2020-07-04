@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="plantilla/template :: head">
+</head>
+<body>
+<header th:replace="plantilla/template :: header"></header>
+
+<div class="container">
+    <h1>Lista de usuarios</h1>
+</div>
+
+<div class="container my-5">
+
+    <a class="btn btn-primary btn-sm" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/crearusuarios}"
+       th:text="'Nuevo Usuario'" title="Crear Nuevo Registro">
+    </a>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Email</th>
+            <th scope="col">password</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col ">Telefono</th>
+            <th scope="col"  sec:authorize="hasRole('ROLE_USER')">Editar</th>
+            <th scope="col"  sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario:${usuarios}">
+            <th scope="row" th:text="${usuario.id}"></th>
+            <td th:text="${usuario.username}"></td>
+            <td th:text="${usuario.password}"></td>
+            <td th:text="${usuario.enable}"></td>
+            <td th:text="${usuario.nombre}"></td>
+            <td th:text="${usuario.apellido}"></td>
+            <td th:text="${usuario.telefono}"></td>
+
+            <td  sec:authorize="hasRole('ROLE_USER')">
+                <a class="btn btn-success btn-sm" th:href="@{/editarusuarios/} + ${usuario.id}"
+                   th:text="'Editar'" title="Editar Registro">
+                </a>
+            </td>
+            <td  sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="btn btn-danger btn-sm" th:href="@{/eliminarusuarios/} + ${usuario.id}"
+                   th:text="'Eliminar'" title="Eliminar Registro"
+                   onclick="return confirm('Esta seguro de eliminar el registro?');">
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+<footer th:replace="plantilla/template :: footer"></footer>
+
+</body>
+</html>
